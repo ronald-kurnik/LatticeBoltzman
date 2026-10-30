@@ -3,6 +3,8 @@
 2-D simulation of air flowing through a duct that contains either a smooth (Venturi-like) or an abrupt constriction.  
 The code uses the D2Q9 lattice Boltzmann method, is dimensionally scaled to a 10 cm duct, and reports static-pressure recovery.
 
+![LBM_graphs](LBM_graphs.png)
+
 ## Physical setup
 
 | Quantity              | Value                          |
@@ -88,6 +90,42 @@ and the recovery efficiency is
     eta = (P_dn - P_th) / delta_P_ideal
 
 (Because the exit is open to atmosphere, eta is often negative; the useful figure of merit is the net loss.)
+
+## Example results (Re_L ≈ 338)
+
+=== Smooth pressure recovery ===
+  Upstream P   = 0.39157
+  Throat P     = 0.37778  (x=5.3 cm)
+  Downstream P = 0.38073
+  Throat drop  = 0.01379
+  Recovered    = 0.00295
+  Recovery ratio = 0.214
+  Net loss     = 0.01084
+  Ideal KE recovery = 0.00579
+  Recovery efficiency = 0.510
+
+=== Abrupt pressure recovery ===
+  Upstream P   = 0.40200
+  Throat P     = 0.37108  (x=4.8 cm)
+  Downstream P = 0.36774
+  Throat drop  = 0.03092
+  Recovered    = -0.00333
+  Recovery ratio = -0.108
+  Net loss     = 0.03426
+  Ideal KE recovery = 0.01525
+  Recovery efficiency = -0.219
+
+### Brief discussion
+
+Both geometries discharge to a fixed atmospheric pressure, so a large positive pressure rise from throat to exit is not expected. The useful comparison is the sign of the recovery and the size of the net loss.
+
+- Smooth: recovery ratio = +0.214 and efficiency = +0.510.  
+  After the throat the static pressure rises a little; about half of the ideal Bernoulli recovery is realized. Net loss is modest (0.011).
+
+- Abrupt: recovery ratio = -0.108 and efficiency = -0.219.  
+  After the throat the static pressure continues to fall. Separation and recirculation dissipate kinetic energy, so there is no recovery. Net loss is more than three times larger (0.034).
+
+The factor-of-three difference in net loss quantifies the extra total-pressure penalty caused by the abrupt expansion.
 
 ## Running the code
 
